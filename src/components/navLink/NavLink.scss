@@ -1,0 +1,17 @@
+.nav-link{
+
+    .nav-link-list{
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        
+        .nav-item{
+            -webkit-user-select: none;
+
+            a{
+                cursor: pointer;
+            
+            }
+        }
+    }
+}

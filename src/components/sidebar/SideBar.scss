@@ -1,0 +1,99 @@
+.sidebar{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    border-right: 1px solid #eee;
+
+    @media (max-width: 719px) {
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+    }
+    @media (max-width: 959px) {
+        width: 200px;
+    }
+
+    .nav-link {
+        display: none;
+
+        .nav-item{
+            display: block;
+            padding: 10px 0 10px 20px;
+            cursor: pointer;
+            &:hover{
+                background-color: #eee;
+                color: green;
+            }
+        }
+        
+        @media (max-width: 719px) {
+            display: block;
+        }
+
+    }
+
+    .nav-list {
+        
+        .main-list{
+            list-style-type: none;
+            margin-top: 35px;
+
+
+            .list-item {
+                position: relative;
+                cursor: pointer;
+                display: block;
+
+                a{
+                    font-size: 16px;
+                    display: block;
+                    color: #222;
+                    line-height: 41px;
+                    -webkit-user-select: none;
+                    &:hover{
+                        background-color: #eee;
+                    }
+                }
+
+                .item-title{
+                    padding-left: 50px;
+                }
+
+                .item-list{
+                    display: block;
+                    max-height: 0;
+                    transition: all .1s ease;
+                    overflow: hidden;
+
+                    a{
+                        padding-left: 80px;
+                    }
+                }
+
+                .item-mask{
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    left: 0;
+                    height: 41px;
+                }
+
+                .show-list + .item-list{
+                    display: block;
+                    max-height: 123px;                   
+                }
+
+                .show-list{
+                    border-left: 5px solid green;
+                    background-color: #fff!important;
+                }
+
+                .router-link-active{
+                    background-color: #eee;
+                }
+            }
+        }
+
+    }
+}
