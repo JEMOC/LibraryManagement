@@ -2,29 +2,35 @@
     <div class="input">
         <div class="basebox clearfix">
             <div class="coverbox">
-                <label for="up" class="cover-mask" :class="{add: !url}"></label>
-                <input id="up" style="display:none" type="file" @change="update($event)">
-                <img :src="getUrl" alt="" class="cover">
+                <label for="up" class="cover-mask" :class="{add: !info.cover}"></label>
+                <input id="up" style="display:none" type="file" @change="getImage($event)">
+                <img :src="info.cover" alt="" class="cover">
             </div>
-            <div class="baseinfo">
-                <div class="titlebox inputbox">
-                    <input type="text" placeholder="书名">
+            <div class="info">
+                <div class="baseinfo">
+                    <div style="width: 80%; border-bottom: 1px solid #a9a9a9" class="clearfix">
+                        <input type="text" placeholder="书名" v-model="info.name">
+                        <input type="text" placeholder="副标题" v-model="info.subHead">
+                        <input type="text" placeholder="原作名" v-model="info.original">
+                        <input type="text" placeholder="ISBN" v-model="info.isbn">
+                        <input type="text" placeholder="作者" v-model="info.author">
+                        <input type="text" placeholder="出版社" v-model="info.publish">
+                        <input type="date" v-model="info.date">
+                    </div>
                 </div>
-                <div class="sub-head inputbox">
-                    <input type="text" placeholder="副标题">
+                <div class="synopsis">
+                    <div class="biography">
+                        <label for="p2">个人简介</label>
+                        <textarea id="p2" style="resize: none; height: 160px; width: 80%; font-size: 14px" v-model="info.synopsis.author"></textarea>
+                    </div>
+                    <div class="content-validity">
+                        <label for="p3">内容简介</label>
+                        <textarea name="" id="p3" style="resize: none; height: 160px; width: 80%; font-size: 14px"
+                            v-model="info.synopsis.content"></textarea>
+                    </div>
+                    <button @click="sumbit()">提交</button>
                 </div>
-                <div class="orgial-name inputbox">
-                    <input type="text" placeholder="原作名">
-                </div>
-                <div class="ISBN inputbox">
-                    <input type="text" placeholder="ISBN">
-                </div>
-                <div class="author inputbox">
-                    <input type="text" placeholder="作者"> 
-                </div>
-                <div class="publish inputbox">
-                    <input type="text" placeholder="出版社">
-                </div>
+
             </div>
 
         </div>
@@ -36,27 +42,52 @@
         name: 'Input',
         data() {
             return {
-                url: ''
+                url: '',
+                info: {
+                    name: '',
+                    cover: '',
+                    subHead: '',
+                    original: '',
+                    isbn: '',
+                    author: '',
+                    publish: '',
+                    date: '',
+                    synopsis: {
+                        author: '',
+                        content: ''
+                    }
+                }
             }
         },
         methods: {
-            update: function (e) {
+            getImage: function (e) {
                 let that = this
-                console.log(e.target.files)
                 let reader = new FileReader()
                 reader.readAsDataURL(e.target.files[0])
                 reader.onloadend = function () {
                     let URL = reader.result;
-                    console.log(URL)
-                    that.url = URL
+                    that.info.cover = URL
                 }
 
+            },
+            print: function(){
+                console.log(this.info)
+            },
+            sumbit: function(){
+                let that = this
+                that.$http
+                    .get('http://123')
+                    .then((data) => {
+                        return data
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        console.log('未设定交互url')
+                    })
             }
         },
         computed: {
-            getUrl: function () {
-                return this.url
-            }
+
         }
     }
 </script>
@@ -65,21 +96,20 @@
     .input {
         .basebox {
             .coverbox {
-                box-sizing: border-box;
                 width: 160px;
                 height: 220px;
                 margin-left: 20px;
                 position: relative;
                 float: left;
+                overflow: hidden;
 
                 .cover-mask {
                     display: block;
                     position: absolute;
-                    height: 100%;
-                    width: 100%;
+                    height: 216px;
+                    width: 156px;
                     cursor: pointer;
                     background-color: transparent;
-                    z-index: 10;
                 }
 
                 .add {
@@ -93,27 +123,41 @@
                 }
             }
 
-            .baseinfo {
-                display:block;
+            .info {
+                display: block;
                 overflow: hidden;
+                padding: 0 40px 0 80px;
 
 
-                input {
-                    font-size: 16px;
-                    padding: 2px 5px;
-                    border: 0;
-                    border-bottom: 1px solid #ccc;
-                    background-color: #f2f2f2;
-                    outline: 0;
-                    &:focus{
-                        background-color: #fff;
+
+                .baseinfo {
+                    margin-bottom: 10px;
+
+
+                    input {
+                        width: 200px;
+                        font-size: 16px;
+                        line-height: 20px;
+                        text-indent: 5px;
+                        padding: 5px 10px;
+                        margin: 0 40px 20px 0;
+                        border: 0;
+                        border-bottom: 1px solid #ccc;
+                        outline: none;
+
+
                     }
                 }
 
-                .inputbox{
-                    float: left;
-                    margin: 5px 20px 40px 20px;
-  
+                .synopsis {
+                    div {
+                        margin-bottom: 30px;
+                    }
+
+                    label {
+                        display: block;
+                        padding-bottom: 8px;
+                    }
                 }
             }
 

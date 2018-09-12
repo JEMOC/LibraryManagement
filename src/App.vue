@@ -51,4 +51,7 @@ a{
   content: '';
   display: table;
 }
+html, a, span, h1, h2, p, input{
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
 </style>
